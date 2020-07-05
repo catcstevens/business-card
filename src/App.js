@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Form from './components/Form';
+import Card from './components/Card'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      surname: '',
+      email: '',
+      phone: '',
+      address: {
+        number: '',
+        houseName: '',
+        street: '',
+        suburb: '',
+        state: '',
+        postcode: '',
+        country: ''
+    }
+  }
 }
+
+onChangePersonal = (name,value) => {
+  const updatedInfo = {
+    ...this.state,
+    [name]: value
+  }
+  this.setState(updatedInfo)
+}
+
+onChangeAddress = (name, value) => {
+  const updatedAddress = {
+    ...this.state.address,
+    [name]: value
+  }
+  const updatedInfo = {
+    ...this.state,
+    address: updatedAddress
+  }
+  this.setState(updatedInfo)
+}
+
+  render() {
+    return (
+      <div>
+            <Form {...this.state}
+            onChangePersonal={this.onChangePersonal}
+            onChangeAddress={this.onChangeAddress}
+            />
+            <Card {...this.state}/>
+      </div>
+    )
+  }
+  }
+
 
 export default App;
